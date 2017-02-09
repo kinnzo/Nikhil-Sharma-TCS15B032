@@ -1,0 +1,45 @@
+Overleaf Read Link is : https://www.overleaf.com/read/ysdzyntrrmpn
+
+Complete syntax and source has been added in overleaf template.
+
+Introduction
+Elm is a Functionally Reactive Programming Language (FRP). Functional reactive programming is a declarative approach to GUI design which includes basically the “what” feature instead of the  ”how?”  It is easier to do something without specifying much of the background details. 
+Eg.
+ main = lift asText Mouse.pointer 
+It displays the location of mouse pointer with respect to top left corner of the screen. In this way we interact with the mouse pointer without writing much of the code. Elm is basically a concurrent FRP language focused on easily creating responsive GUIs. Elm has two major features (1) purely functional graphical layout and (2) support for concurrent FRP. Purely functional graphical layout makes it easier to combine texts, images and other things without dealing with complex visual components. Concurrent FRP involves faster processing. Usually languages work with a fixed sequence of instructions whereas in Elm when not necessary the order may not be fixed. One function if evaluated once for a particular input won’t be re-evaluated unless the input data is changed. Elm’s concurrent runtime system avoids this with memoizaton, an optimization technique that saves previously computed values to avoid future computations.
+
+
+
+Background
+Generally, in functional programming languages, values are immutable. Elm introduces them with safe abstractions. There are two important approaches to introduce immutability:
+
+
+(1)	Functional Reactive Programming –
+It recasts the mutable values as time varying values called signals. There are three major semantics of FRP family: 
+
+Classical FRP – It introduced two types of values: Behaviors and Events. 
+Behaviors are time varying values which are a function from time to value.  
+Behaviour a = Time -> a
+Events represent a sequence of discrete events as a time-stamped list of values.
+Event a = [(Time,a)]
+In Classical FRP used by a Fran there were space and time leaks. It means that the memory usage increases with time because the computed values have to be stored. If we refer to the past and future value of a variable then, future reference is not possible and past reference implies that every value is stored and longer the code runs more is the size. It also causes stack overflow at times.
+
+Real time & Event driven FRP – It overcame the space and time leaks but at the cost of expressiveness. To produce efficiency the RT-FRP introduced isomorphism between Behavior and Event. Both behavior and event can be represented as common type called a signal.
+Signal = Time -> a
+It ensures that signals cannot be used unsafely by presenting a two-tiered language: an unrestricted base language (basic lambda calculus that supports recursion and higher order functions) and a more limited reactive language (supporting recursion but not higher order functions).  Event driven FRP is a direct descendant of RT-FRP which introduces discrete signals that change only on event. Both RT-FRP and E-FRP aren’t used to create GUIs. They do not contain full expressiveness of the classical FRP.
+
+Arrowized FRP – AFRP uses signal functions instead of signals. It can be thought of as a function form signal to signal,
+SF a b = Signal a -> Signal b
+where signals are exactly the same as in RT-FRP. AFRP does not have space and time leaks in its implementation but programs written in AFRP may have them. AFRP achieves the flexibility of Classical FRP with continuation-based switching and dynamic collections of signal functions. The instant update of the function to keep a track of continuous values also causes delays for discrete values. Useless updates and global delays are a problem and the removal of these problems or their minimization sets up the background for the language.
+
+
+(2)	Message Passing Concurrency
+By giving freedom from event ordering restrictions, message passing concurrency gives a solution to the two efficiency problems of Arrowized FRP. Message passing concurrency refers to a set of concurrent threads that communicate by sending messages. It is robust to both discrete and long running computations.
+
+By giving freedom from event ordering restrictions, message passing concurrency gives a solution to the two efficiency problems of Arrowized FRP. Message passing concurrency refers to a set of concurrent threads that communicate by sending messages. It is robust to both discrete and long running computations.
+
+
+The Core Language
+Elm achieves expressiveness in two major ways. (1) The core language combines a basic functional language with a small set of reactive primitives and (2) Elm's core language is compatible with Arrowized FRP. Elm benefits from 2 tiered implementation, E-FRP and RT-FRP internally without restricting source level expressiveness. 
+
+
